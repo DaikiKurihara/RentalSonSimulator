@@ -1,6 +1,8 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
+
+# トータル申込者数
 class Parents():
 
     def __init__(self) -> None:
