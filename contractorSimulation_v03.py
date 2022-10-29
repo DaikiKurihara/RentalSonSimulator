@@ -178,27 +178,6 @@ class Logger(BaseRepr):
         return obj
 
 
-def case1Defaults():
-    """
-    Nm	[people]	月訪問者数			   10 people
-    Rl	[-]		    長期契約率			   2.5 %
-    Rs	[-]		    短期契約率			   10 %
-    Rt	[-]		    単発率                  20 %
-    """
-    Nm = 50
-    Rl = 2.5e-2
-    Rs = 10e-2
-    Rt = 20e-2
-    sim = ContractorSimuration(Nm, Rl, Rs, Rt)
-    sim.defaultDurationl = 12
-    sim.defaultDurations = 2
-    sim.defaultDurationt = 1
-    sim.contractSalesl = 0.98
-    sim.contractSaless = 0.98
-    sim.contractSalest = 0.35
-    return sim
-
-
 def getVariableList(obj):
     s = obj.__dict__
     varList = []
@@ -224,8 +203,73 @@ def parseLoggerData(log, varList=None):
     return df
 
 
+def case1Defaults():
+    """
+    Nm	[people]	月訪問者数			   10 people
+    Rl	[-]		    長期契約率			   2.5 %
+    Rs	[-]		    短期契約率			   10 %
+    Rt	[-]		    単発率                 20 %
+    """
+    Nm = 50
+    Rl = 2.5e-2
+    Rs = 10e-2
+    Rt = 20e-2
+    sim = ContractorSimuration(Nm, Rl, Rs, Rt)
+    sim.defaultDurationl = 12
+    sim.defaultDurations = 2
+    sim.defaultDurationt = 1
+    sim.contractSalesl = 0.98
+    sim.contractSaless = 0.98
+    sim.contractSalest = 0.35
+    return sim
+
+
+def case2Defaults():
+    """
+    Nm	[people]	月訪問者数			   10 people
+    Rl	[-]		    長期契約率			   2.5 %
+    Rs	[-]		    短期契約率			   10 %
+    Rt	[-]		    単発率                 20 %
+    """
+    Nm = 50
+    Rl = 2.5e-2
+    Rs = 10e-2
+    Rt = 20e-2
+    sim = ContractorSimuration(Nm, Rl, Rs, Rt)
+    sim.defaultDurationl = 12
+    sim.defaultDurations = 3
+    sim.defaultDurationt = 1
+    sim.contractSalesl = 0.98
+    sim.contractSaless = 0.98
+    sim.contractSalest = 0.35
+    return sim
+
+
+def case2Defaults():
+    """
+    Nm	[people]	月訪問者数			   10 people
+    Rl	[-]		    長期契約率			   2.5 %
+    Rs	[-]		    短期契約率			   10 %
+    Rt	[-]		    単発率                 20 %
+    """
+    Nm = 150
+    Rl = 2.5e-2
+    Rs = 10e-2
+    Rt = 20e-2
+    sim = ContractorSimuration(Nm, Rl, Rs, Rt)
+    sim.defaultDurationl = 12
+    sim.defaultDurations = 3
+    sim.defaultDurationt = 1
+    sim.contractSalesl = 0.98
+    sim.contractSaless = 0.98
+    sim.contractSalest = 0.35
+    return sim
+
+
 if __name__ == "__main__":
     sim = case1Defaults()
+    sim = case2Defaults()
+
     logger = Logger()
     log = Log()
 
@@ -250,7 +294,7 @@ if __name__ == "__main__":
         logger.log(log)
 
     saveDir = "./results"
-    key = "test01Log"
+    key = "test02Log"
     fname = "{}/{}.pkl".format(saveDir, key)
     logger.save(fname)
     # logLoad = Logger.load(fname)
@@ -258,6 +302,8 @@ if __name__ == "__main__":
     # df = parseLoggerData(logger, varList)
     df = parseLoggerData(logger)
     df.to_csv("{}/{}.csv".format(saveDir, key), index=False)
+    plt.plot(df["M"], df[["salesl", "saless", "salest", "totalSales"]])
+    plt.show()
     #     print(sim.countCurrentContractor())
 
     # print(sim)
